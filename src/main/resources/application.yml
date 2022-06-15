@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/real_estate_app
+    password: root
+  jpa:
+    properties:
+      javax:
+        persistence:
+          validation:
+            mode: none
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: '5050'
+
+
+logging:
+  level:
+    org:hibernate:SQL: debug
+
+
+#uygulama içinde kullanmak üzere dynamic path belirliyoruz
+rabbitmq:
+  #You can configure all your exchanges here
+  exchanges:
+    direct-exchange:
+      name: direct-exchange
+  #You can configure all your queue here
+  queues:
+    user-queue:
+      name: user-queue
+    sale-advertisement-queue:
+      name: sale-advertisement-queue
+
+
+
+
