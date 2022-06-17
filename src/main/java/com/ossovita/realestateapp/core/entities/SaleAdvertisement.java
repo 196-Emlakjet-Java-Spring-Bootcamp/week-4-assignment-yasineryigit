@@ -30,6 +30,9 @@ public class SaleAdvertisement {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "price")
+    private int price;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

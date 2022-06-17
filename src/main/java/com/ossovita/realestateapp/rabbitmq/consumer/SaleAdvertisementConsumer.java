@@ -17,7 +17,7 @@ public class SaleAdvertisementConsumer {
 
     @RabbitListener(queues = "${rabbitmq.queues.sale-advertisement-queue.name}")//get queue name from application.yml
     private void saveSaleAdvertisement(int piece) {
-        log.info(piece + "sale advertisement will be created by consumer");
+        log.info(piece + " sale advertisement will be created by consumer");
         try {
             //sleep for  2 mins
             Thread.sleep(5000);//5 sec for test

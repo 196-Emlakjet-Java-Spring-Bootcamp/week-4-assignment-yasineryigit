@@ -17,7 +17,7 @@ public class UserConsumer {
 
     @RabbitListener(queues = "${rabbitmq.queues.user-queue.name}")//get queue name from application.yml
     private void saveUser(int piece) {
-        log.info(piece + "random user will be created by consumer");
+        log.info(piece + " random user will be created by consumer");
         try {
             //sleep for  2 mins
             Thread.sleep(5000);//5 sec for test

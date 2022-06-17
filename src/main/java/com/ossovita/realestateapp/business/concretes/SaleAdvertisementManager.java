@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -47,10 +49,36 @@ public class SaleAdvertisementManager implements SaleAdvertisementService {
                     .title(title)
                     .description(description)
                     .createdAt(LocalDateTime.now())
+                    .price(random.nextInt(300000))
                     .userFk(userPk)
                     .build();
             saleAdvertisementRepository.save(saleAdvertisement);
         }
+    }
+
+    @Override
+    public List<SaleAdvertisement> getSaleAdvertisementByPrice(int lb, int ub) {
+        return saleAdvertisementRepository.findByPriceBetween(lb, ub);
+
+    }
+
+    @Override
+    public List<SaleAdvertisement> getByWord(String word) {
+        List<SaleAdvertisement> saleAdvertisementList = new ArrayList<>();
+        saleAdvertisementList.addAll(saleAdvertisementRepository.findByTitleContains(word));
+        saleAdvertisementList.addAll(saleAdvertisementRepository.findByDescriptionContains(word));
+        //TODO unique result will be implemented.
+        return saleAdvertisementList;
+    }
+
+    @Override
+    public List<SaleAdvertisement> findLatestByUserPkAndPiece(long userPk, int piece) {
+        List<SaleAdvertisement> saleAdvertisementList =  saleAdvertisementRepository.findByUserUserPk(userPk);
+        //TODO refactor
+
+        saleAdvertisementList.stream().sorted(Comparator.comparing(SaleAdvertisement::getCreatedAt)).collect(Collectors.toList()).stream().limit(piece);
+        return saleAdvertisementList;
+
     }
 
     private String getRandomFirstWordForTitle() {
